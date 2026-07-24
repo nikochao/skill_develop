@@ -1,14 +1,13 @@
-# TimeEdit Selector Notes
+# TimeEdit selectors
 
-Document stable selectors discovered during Playwright implementation.
+- Student entry: `https://www.schema.uu.se/`
+- Student landing page: `/uu/web/wr_student/`
+- Schedule search: `/uu/web/wr_student/ri1Q4.html`
+- Search type: `select[name="fancytypeselector"]`
+- Course search input: `input[name="fftext"]`
+- Search result container: `#objectsearchresult`
+- Search candidates: `#objectsearchresult .searchObject`
+- Show schedule button text: `Visa schema`
 
-Suggested sections:
-
-- Search input
-- Search result rows
-- "Add to schedule" controls
-- Semester/date controls
-- Publish/share/export controls
-- Subscription link locations
-
-Keep this file updated when selectors change.
+SSO returns to `/uu/web` after authentication, so navigate to the schedule
+search path again after login completes.

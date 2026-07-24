@@ -1,6 +1,6 @@
 ---
 name: uppsala-timeedit-calendar
-description: Read course names, codes, and study dates from a Ladok screenshot with AI vision, then generate a Uppsala TimeEdit calendar subscription URL. Use when a user provides a Ladok course screenshot or asks to create or subscribe to a Uppsala TimeEdit schedule.
+description: Read course names, codes, instance codes, and study dates from a Ladok screenshot with AI vision, then generate a Uppsala TimeEdit calendar subscription URL. Use when a user provides a Ladok course screenshot or asks to create or subscribe to a Uppsala TimeEdit schedule.
 ---
 
 # Uppsala TimeEdit Calendar
@@ -17,6 +17,7 @@ description: Read course names, codes, and study dates from a Ladok screenshot w
     {
       "course_code": "1AB123",
       "course_name": "Example course",
+      "instance_code": "11612",
       "study_period": {
         "start_date": "2026-08-31",
         "end_date": "2027-01-17"
@@ -26,8 +27,8 @@ description: Read course names, codes, and study dates from a Ladok screenshot w
 }
 ```
 
-3. Use `null` for every unreadable or uncertain field. Never infer missing characters, dates, semester, or course codes.
-4. Show the extracted data to the user and ask them to fill or correct all `null` or uncertain course fields. Continue after every course has a confirmed `course_code`, `course_name`, `start_date`, and `end_date`; `semester` may remain `null`.
+3. Use `null` for every unreadable or uncertain field. Never infer missing characters, dates, semester, course codes, or instance codes.
+4. Show the extracted data to the user and ask them to fill or correct all `null` or uncertain course fields. Continue after every course has a confirmed `course_code`, `course_name`, `instance_code`, `start_date`, and `end_date`; `semester` may remain `null`.
 5. Pass the confirmed JSON to `scripts/search_timeedit.py` on standard input.
 6. If the search returns multiple matches, ask the user to choose. Never select an ambiguous match automatically.
 7. Pass confirmed matches through `scripts/create_schedule.py`, then run `scripts/extract_subscription.py`.
@@ -37,6 +38,7 @@ description: Read course names, codes, and study dates from a Ladok screenshot w
 - Normalize `Autumn YYYY` or `HT YYYY` to `Autumn YYYY`.
 - Normalize `Spring YYYY` or `VT YYYY` to `Spring YYYY`.
 - Use `null` when no semester label is visible. Do not derive a semester from study dates.
+- The search script may convert `start_date` to TimeEdit's `HYY` or `VYY` identifier only to distinguish course instances; do not use it to populate `semester`.
 
 ## Confirmation rules
 
